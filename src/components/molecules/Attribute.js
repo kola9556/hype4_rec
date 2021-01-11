@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { media, constant } from "../../utils/index";
 import Minus from "../atoms/Minus";
@@ -113,15 +113,19 @@ const Attribute = ({
   extended,
   addFormSubmit,
 }) => {
-  const atr = useRef(null);
+  const atrRef = useRef(null);
   const verticalLine = useRef(null);
   const verticalLineAdditional = useRef(null);
+  const [height, setHeight] = useState(0);
 
+  const handleSettingHeight = (ref) => {
+    setHeight(ref.current.offsetHeight);
+  };
   useEffect(() => {
     //Makes vertical line the same height as AttributeWrapper
-    const atrWrapperHeight = atr.current.offsetHeight;
-    verticalLine.current.style.height = `${atrWrapperHeight}px`;
-  }, []);
+    handleSettingHeight(atrRef);
+    verticalLine.current.style.height = `${height}px`;
+  });
 
   const handleAdditionalPlusClick = () => {
     //Displays modal
@@ -140,7 +144,7 @@ const Attribute = ({
               <p>And</p>
             </VerticalLine>
             <HorizontalLine />
-            <AttributeWrapper ref={atr}>
+            <AttributeWrapper ref={atrRef}>
               <span>
                 <p>{name}</p>
                 <Minus onClick={buttonClick} />
@@ -154,7 +158,7 @@ const Attribute = ({
                         </AdAttrVerticalLine>
                         <HorizontalLine />
                         <p>{add}</p>
-                        <Minus onClick={() => additionalMinusClick(id, add)} />
+                        <Minus onClick={() => additionalMinusClick(id, add, atrRef)} />
                       </span>
                     </AdditionalAttributte>
                   ))
@@ -180,7 +184,7 @@ const Attribute = ({
               <p>And</p>
             </VerticalLine>
             <HorizontalLine />
-            <AttributeWrapper ref={atr}>
+            <AttributeWrapper ref={atrRef}>
               <span>
                 <p>{name}</p>
                 <Minus onClick={buttonClick} />

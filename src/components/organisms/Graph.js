@@ -47,7 +47,7 @@ const Graph = () => {
   };
 
   //For additional attributes minus
-  const handleAdditionalMinusClick = (id, additional) => {
+  const handleAdditionalMinusClick = (id, additional, atrRef) => {
     const newAttributes = [];
 
     attributes.forEach((atr) => {
